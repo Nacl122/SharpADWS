@@ -29,6 +29,8 @@ namespace SharpADWS.ADWS
 
         public NetTcpBinding Binding { get; set; }
         public MessageVersion Version { get; set; }
+        public string DNSRoot { get; set; }
+
         public ADWSConnection(string domainName, string instance, NetworkCredential credentials)
         {
             this.DomainName = domainName;
@@ -62,6 +64,7 @@ namespace SharpADWS.ADWS
             {
                 this.DefaultNamingContext += ",DC=" + DC;
             }
+            this.DNSRoot = $"CN=MicrosoftDNS,DC=DomainDnsZones{this.DefaultNamingContext}";
             this.DefaultNamingContext = this.DefaultNamingContext.TrimStart(',');
         }
 

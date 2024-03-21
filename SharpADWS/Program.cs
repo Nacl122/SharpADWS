@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using SharpADWS.Methods.ACL;
 using SharpADWS.Methods.ADCS;
 using SharpADWS.Methods.Certify;
+using Dns = SharpADWS.Methods.DNS.Dns;
 
 namespace SharpADWS
 {
@@ -129,6 +130,17 @@ namespace SharpADWS
             Console.WriteLine();
             Console.WriteLine("FindDelegation options:");
             Console.WriteLine("  No options, just run!");
+            Console.WriteLine();
+            Console.WriteLine("DNS options");
+            Console.WriteLine("  -action [{query, all, add, modify, ldapremove}]");
+            Console.WriteLine("                          Action to operate on DNS method");
+            Console.WriteLine("          query           Query record(default)");
+            Console.WriteLine("          all             Query parsing records for all machines in the domain");
+            Console.WriteLine("          add             Add a new record");
+            Console.WriteLine("          modify          Modify an existing record");
+            Console.WriteLine("          ldapremove      Delete from LDAP");
+            Console.WriteLine("  -record                 Target Record");
+            Console.WriteLine("  -data                   Record Data");
         }
 
         private static void Run(Options options)
@@ -407,6 +419,64 @@ namespace SharpADWS
             {
                 FindDelegation findDelegation = new FindDelegation(adwsConnection);
                 findDelegation.FindAllDelegation();
+            }
+            else if (options.Method.ToLower() == "dns")
+            {
+                Dns dns = new Dns(adwsConnection);
+                if (string.IsNullOrEmpty(options.Action))
+                {
+                    options.Action =  "query";
+                }
+                if (options.Action.ToLower() == "query")
+                {
+                    if (String.IsNullOrEmpty(options.Record))
+                    {
+                        Console.WriteLine("[-] Missing parameter: -record");
+                        return;
+                    }
+                    dns.Query(options.Record);
+                }
+                else if(options.Action.ToLower() == "all")
+                {
+                    dns.Query_all();
+                }
+                else if (options.Action.ToLower() == "add")
+                {
+                    if (String.IsNullOrEmpty(options.Data))
+                    {
+                        Console.WriteLine("[-] Missing parameter: -data");
+                        return;
+                    }
+                    if (String.IsNullOrEmpty(options.Record))
+                    {
+                        Console.WriteLine("[-] Missing parameter: -record");
+                        return;
+                    }
+                    dns.Add(options.Record, options.Data);
+                }
+                else if (options.Action.ToLower() == "modify")
+                {
+                    if (String.IsNullOrEmpty(options.Data))
+                    {
+                        Console.WriteLine("[-] Missing parameter: -data");
+                        return;
+                    }
+                    if (String.IsNullOrEmpty(options.Record))
+                    {
+                        Console.WriteLine("[-] Missing parameter: -record");
+                        return;
+                    }
+                    dns.modify(options.Record, options.Data);
+                }
+                else if (options.Action.ToLower() == "ldapremove")
+                {
+                    if (String.IsNullOrEmpty(options.Record))
+                    {
+                        Console.WriteLine("[-] Missing parameter: -record");
+                        return;
+                    }
+                    dns.ldapremove(options.Record);
+                }
             }
         }
     }

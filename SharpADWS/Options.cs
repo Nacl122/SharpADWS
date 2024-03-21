@@ -31,6 +31,10 @@ namespace SharpADWS
         public string DeviceID { get; set; }
         public string OutputFormat { get; set; }
         public string Template { get; set; }
+        
+        public string Record { get; set; }
+        public string Data { get; set; }
+        
 
         public bool DisplayHelp { get; set; }
 
@@ -144,6 +148,12 @@ namespace SharpADWS
                         break;
                     case "-template":
                         Template = args[i + 1];
+                        break;
+                    case "-record":
+                        Record = args[i + 1].Split('.')[0];
+                        break;
+                    case "-data":
+                        Data = args[i + 1];
                         break;
                 }
             }

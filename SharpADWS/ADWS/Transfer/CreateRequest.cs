@@ -41,7 +41,6 @@ namespace SharpADWS.ADWS.Transfer
             controls[0] = new SecurityDescriptorFlagControl();
 
             ADCreateRequestMsg Request = new ADCreateRequestMsg(this.Instance, parent, relativeDistinguishedName, controls, directoryAttribute);
-
             Message addResponse = resourceFactoryClient.Create(Request);
             return addResponse;
         }

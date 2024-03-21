@@ -1,4 +1,5 @@
 ﻿using DSInternals.Common.Data;
+using SharpADWS.Methods.DNS;
 using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
@@ -23,7 +24,7 @@ namespace SharpADWS.ADWS
         public string DistinguishedName { get; set; }
         public string DNSHostName { get; set; }
         public string Cn { get; set; }
-        public byte[] DnsRecord { get; set; }
+        public DNS_RECORD DnsRecord { get; set; }
         public int DSMachineAccountQuota { get; set; }
         public string GPCFileSysPath { get; set; }
         public string IsDeleted { get; set; }

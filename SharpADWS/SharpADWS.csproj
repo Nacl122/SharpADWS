@@ -246,6 +246,8 @@
     <Compile Include="Methods\Certify\FindCAs.cs" />
     <Compile Include="Methods\Certify\CAParser.cs" />
     <Compile Include="Methods\Certify\ModifyCATemplates.cs" />
+    <Compile Include="Methods\DNS\Dns.cs" />
+    <Compile Include="Methods\DNS\DNS_RECORD.cs" />
     <Compile Include="Methods\FindDelegation.cs" />
     <Compile Include="Methods\Certify\PKI.cs" />
     <Compile Include="Methods\Certify\PKIObject.cs" />

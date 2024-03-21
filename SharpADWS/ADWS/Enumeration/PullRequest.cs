@@ -18,6 +18,7 @@ using System.DirectoryServices;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.ActiveDirectory.WebServices.Proxy;
 using DSInternals.Common.Data;
+using SharpADWS.Methods.DNS;
 
 namespace SharpADWS.ADWS.Enumeration
 {
@@ -129,7 +130,7 @@ namespace SharpADWS.ADWS.Enumeration
                             adobject.Cn = propertyValue;
                             break;
                         case "dnsRecord":
-                            adobject.DnsRecord = Convert.FromBase64String(propertyValue);
+                            adobject.DnsRecord = ParseDnsRecord(Convert.FromBase64String(propertyValue));
                             break;
                         case "ms-DS-MachineAccountQuota":
                             adobject.DSMachineAccountQuota = int.Parse(propertyValue);
@@ -268,6 +269,12 @@ namespace SharpADWS.ADWS.Enumeration
             }
             return adObjects;
         }
+
+        private static DNS_RECORD ParseDnsRecord(byte[] propertyValues)
+        {
+            return new DNS_RECORD(propertyValues);
+        }
+
 
         private static SecurityIdentifier[] ParseSecurityIdentifierList(string[] propertyValues)
         {
