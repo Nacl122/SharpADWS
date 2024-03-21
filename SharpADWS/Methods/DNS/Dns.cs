@@ -82,7 +82,6 @@ namespace SharpADWS.Methods.DNS
             }
             return names;
         }
-
         
         public void modify(string name, string data)
         {
